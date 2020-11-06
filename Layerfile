@@ -31,27 +31,41 @@ ENV PATH=$HOME/.rbenv/versions/2.7.1/bin:$PATH
 
 RUN gem install pg rails
 
-# Create a rails template project
-RUN rails new myapp --database=postgresql
-WORKDIR myapp
-ENV RAILS_ENV=production
+COPY . .
+#RUN bundle install
+#RUN bundle exec db:migrate db:seed
 
-RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
-RUN sudo -u postgres -H -- psql -t -c "CREATE DATABASE todo-api;"
-RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password';"
+# download-repo.sh : https://gist.github.com/ColinChartier/6bff7cf77adf7d2a8d7d699a5deed707
+RUN REPEATABLE rake assets:precompile && \
+    ./download-repo https://github.com/dalizard/todo-api.git /todo-api master && \
+    pkill rails && \
+    bundle exec rails start && \
+    ( cd /todo-api && yarn start --background; )
 
-# set up database
-RUN echo -e 'development:\n\
-  adapter: postgresql\n\
-  encoder: unicode\n\
-  database: todo-api\n\
-  username: shogun\n\
-  password: password\n' > config/database.yml
+#EXPOSE WEBSITE localhost:8080 /api
+EXPOSE WEBSITE localhost:3000 /
 
-# run migrations
-RUN rake db:migrate
-RUN rake db:setup
-
-# Start the server
-RUN BACKGROUND rails server --binding 0.0.0.0
-EXPOSE WEBSITE localhost:3000
+## Create a rails template project
+#RUN rails new myapp --database=postgresql
+#WORKDIR myapp
+#ENV RAILS_ENV=production
+#
+#RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
+#RUN sudo -u postgres -H -- psql -t -c "CREATE DATABASE todo-api;"
+#RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password';"
+#
+## set up database
+#RUN echo -e 'development:\n\
+#  adapter: postgresql\n\
+#  encoder: unicode\n\
+#  database: todo-api\n\
+#  username: shogun\n\
+#  password: password\n' > config/database.yml
+#
+## run migrations
+#RUN rake db:migrate
+#RUN rake db:setup
+#
+## Start the server
+#RUN BACKGROUND rails server --binding 0.0.0.0
+#EXPOSE WEBSITE localhost:3000
