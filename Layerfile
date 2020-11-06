@@ -11,7 +11,7 @@ RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
     curl -fSsL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
-    apt-get install postgresql postgresql-contrib \
+    apt-get install postgresql postgresql-contrib libpq-dev \
     git-core zlib1g-dev build-essential libssl-dev \
     libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev \
     libcurl4-openssl-dev software-properties-common libffi-dev
