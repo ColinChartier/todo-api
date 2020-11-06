@@ -32,15 +32,16 @@ ENV PATH=$HOME/.rbenv/versions/2.7.1/bin:$PATH
 RUN gem install bundler
 
 COPY / .
+
 RUN bundle install
-#RUN bundle exec db:migrate db:seed
+RUN bundle exec rake db:migrate db:seed
 
 # download-repo.sh : https://gist.github.com/ColinChartier/6bff7cf77adf7d2a8d7d699a5deed707
-RUN REPEATABLE rake assets:precompile && \
-    ./download-repo https://github.com/dalizard/todo-api.git /todo-api master && \
-    pkill rails && \
-    bundle exec rails start && \
-    ( cd /todo-api && yarn start --background; )
+#RUN REPEATABLE rake assets:precompile && \
+#    ./download-repo https://github.com/dalizard/todo-api.git /todo-api master && \
+#    pkill rails && \
+#    bundle exec rails start && \
+#    ( cd /todo-api && yarn start --background; )
 
 #EXPOSE WEBSITE localhost:8080 /api
 EXPOSE WEBSITE localhost:3000 /
