@@ -29,8 +29,10 @@ RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 RUN rbenv install 2.7.1
 ENV PATH=$HOME/.rbenv/versions/2.7.1/bin:$PATH
 
-#COPY . .
-#RUN bundle install
+RUN gem install bundler
+
+COPY / .
+RUN bundle install
 #RUN bundle exec db:migrate db:seed
 
 # download-repo.sh : https://gist.github.com/ColinChartier/6bff7cf77adf7d2a8d7d699a5deed707
