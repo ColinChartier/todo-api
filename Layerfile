@@ -28,6 +28,7 @@ RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 
 RUN rbenv install 2.7.1
 ENV PATH=$HOME/.rbenv/versions/2.7.1/bin:$PATH
+ENV RAILS_ENV=production
 
 RUN gem install bundler
 
@@ -51,7 +52,6 @@ EXPOSE WEBSITE localhost:3000 /
 ## Create a rails template project
 #RUN rails new myapp --database=postgresql
 #WORKDIR myapp
-#ENV RAILS_ENV=production
 #
 #RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
 #RUN sudo -u postgres -H -- psql -t -c "CREATE DATABASE todo-api;"
