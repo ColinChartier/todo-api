@@ -29,9 +29,7 @@ RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 RUN rbenv install 2.7.1
 ENV PATH=$HOME/.rbenv/versions/2.7.1/bin:$PATH
 
-RUN gem install pg rails
-
-COPY . .
+#COPY . .
 #RUN bundle install
 #RUN bundle exec db:migrate db:seed
 
