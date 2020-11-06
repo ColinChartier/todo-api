@@ -43,6 +43,8 @@ RUN bundle exec rake db:migrate db:seed
 #    bundle exec rails start && \
 #    ( cd /todo-api && yarn start --background; )
 
+RUN REPEATABLE bundle exec rails server
+
 #EXPOSE WEBSITE localhost:8080 /api
 EXPOSE WEBSITE localhost:3000 /
 
