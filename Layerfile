@@ -29,6 +29,7 @@ RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 RUN rbenv install 2.7.1
 ENV PATH=$HOME/.rbenv/versions/2.7.1/bin:$PATH
 ENV RAILS_ENV=production
+ENV RAILS_MASTER_KEY=`cat config/credentials/production.key`
 
 RUN gem install bundler
 
