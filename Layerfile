@@ -62,6 +62,7 @@ EXPOSE WEBSITE localhost:3000 /
 ## set up database
 RUN echo -e 'development:\n\
   adapter: postgresql\n\
+  host: localhost\n\
   encoder: unicode\n\
   database: todo-api\n\
   username: shogun\n\
