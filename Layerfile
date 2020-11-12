@@ -54,9 +54,9 @@ EXPOSE WEBSITE localhost:3000 /
 #RUN rails new myapp --database=postgresql
 #WORKDIR myapp
 #
-#RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
-#RUN sudo -u postgres -H -- psql -t -c "CREATE DATABASE todo-api;"
-#RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password';"
+RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
+RUN sudo -u postgres -H -- psql -t -c "CREATE DATABASE todo-api;"
+RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password';"
 #
 ## set up database
 RUN echo -e 'development:\n\
