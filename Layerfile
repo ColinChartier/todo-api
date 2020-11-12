@@ -20,8 +20,8 @@ RUN docker run -d -p 4793:4793 redis:latest && \
     docker run -e POSTGRES_USER=shogun -e POSTGRES_PASSWORD=password -d postgres:12
 
 RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
-RUN sudo -u postgres -H -- psql -t -c "CREATE DATABASE 'todo-api';"
-RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password';"
+RUN sudo -u postgres -H -- psql -t -c 'CREATE DATABASE "todo-api"'
+RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password'"
 
 RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 ENV PATH=$HOME/.rbenv/bin:$PATH
