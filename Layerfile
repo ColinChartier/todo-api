@@ -59,17 +59,17 @@ EXPOSE WEBSITE localhost:3000 /
 #RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password';"
 #
 ## set up database
-#RUN echo -e 'development:\n\
-#  adapter: postgresql\n\
-#  encoder: unicode\n\
-#  database: todo-api\n\
-#  username: shogun\n\
-#  password: password\n' > config/database.yml
+RUN echo -e 'development:\n\
+  adapter: postgresql\n\
+  encoder: unicode\n\
+  database: todo-api\n\
+  username: shogun\n\
+  password: password\n' > config/database.yml
 #
 ## run migrations
-#RUN rake db:migrate
-#RUN rake db:setup
+RUN rake db:migrate
+RUN rake db:setup
 #
 ## Start the server
-#RUN BACKGROUND rails server --binding 0.0.0.0
-#EXPOSE WEBSITE localhost:3000
+RUN BACKGROUND rails server --binding 0.0.0.0
+EXPOSE WEBSITE localhost:3000
