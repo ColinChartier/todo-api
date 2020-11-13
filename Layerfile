@@ -50,7 +50,7 @@ RUN echo -e 'production:\n\
   password: password\n' > config/database.yml
 
 RUN bundle install
-RUN bundle exec rake db:migrate db:seed
+RUN bundle exec rake db:setup db:migrate db:seed
 
 # download-repo.sh : https://gist.github.com/ColinChartier/6bff7cf77adf7d2a8d7d699a5deed707
 #RUN REPEATABLE rake assets:precompile && \
@@ -59,10 +59,10 @@ RUN bundle exec rake db:migrate db:seed
 #    bundle exec rails start && \
 #    ( cd /todo-api && yarn start --background; )
 
-RUN REPEATABLE bundle exec rails server
+#RUN REPEATABLE bundle exec rails server
 
 #EXPOSE WEBSITE localhost:8080 /api
-EXPOSE WEBSITE localhost:3000 /
+#EXPOSE WEBSITE localhost:3000 /
 
 ## Create a rails template project
 #RUN rails new myapp --database=postgresql
@@ -71,10 +71,7 @@ EXPOSE WEBSITE localhost:3000 /
 #
 ## set up database
 #
-## run migrations
-RUN rake db:migrate
-RUN rake db:setup
 #
 ## Start the server
-RUN BACKGROUND rails server --binding 0.0.0.0
+RUN BACKGROUND bundle exec rails server --binding 0.0.0.0
 EXPOSE WEBSITE localhost:3000
