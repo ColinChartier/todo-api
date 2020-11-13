@@ -41,6 +41,14 @@ RUN gem install bundler
 
 COPY / .
 
+RUN echo -e 'production:\n\
+  adapter: postgresql\n\
+  host: postgres\n\
+  encoder: unicode\n\
+  database: todo-api\n\
+  username: shogun\n\
+  password: password\n' > config/database.yml
+
 RUN bundle install
 RUN bundle exec rake db:migrate db:seed
 
@@ -62,13 +70,6 @@ EXPOSE WEBSITE localhost:3000 /
 #
 #
 ## set up database
-RUN echo -e 'production:\n\
-  adapter: postgresql\n\
-  host: postgres\n\
-  encoder: unicode\n\
-  database: todo-api\n\
-  username: shogun\n\
-  password: password\n' > config/database.yml
 #
 ## run migrations
 RUN rake db:migrate
