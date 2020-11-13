@@ -51,27 +51,5 @@ RUN echo -e 'production:\n\
 
 RUN bundle install
 RUN bundle exec rake db:setup db:migrate db:seed
-
-# download-repo.sh : https://gist.github.com/ColinChartier/6bff7cf77adf7d2a8d7d699a5deed707
-#RUN REPEATABLE rake assets:precompile && \
-#    ./download-repo https://github.com/dalizard/todo-api.git /todo-api master && \
-#    pkill rails && \
-#    bundle exec rails start && \
-#    ( cd /todo-api && yarn start --background; )
-
-#RUN REPEATABLE bundle exec rails server
-
-#EXPOSE WEBSITE localhost:8080 /api
-#EXPOSE WEBSITE localhost:3000 /
-
-## Create a rails template project
-#RUN rails new myapp --database=postgresql
-#WORKDIR myapp
-#
-#
-## set up database
-#
-#
-## Start the server
 RUN BACKGROUND bundle exec rails server --binding 0.0.0.0
 EXPOSE WEBSITE localhost:3000
