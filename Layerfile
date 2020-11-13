@@ -62,7 +62,7 @@ EXPOSE WEBSITE localhost:3000 /
 #
 #
 ## set up database
-RUN echo -e 'development:\n\
+RUN echo -e 'production:\n\
   adapter: postgresql\n\
   host: postgres\n\
   encoder: unicode\n\
