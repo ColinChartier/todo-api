@@ -17,11 +17,13 @@ RUN curl -fSsL https://deb.nodesource.com/setup_12.x | bash && \
     libcurl4-openssl-dev software-properties-common libffi-dev
 
 RUN docker run -d -p 4793:4793 redis:latest && \
-    docker run -e POSTGRES_USER=shogun -e POSTGRES_PASSWORD=password -d postgres:12
+    docker run --name postgres -e POSTGRES_USER=shogun -e POSTGRES_PASSWORD=password -e POSTGRES_DB=todo-api -p 5432 -d postgres:12
 
-RUN sudo -u postgres createuser -s -i -d -r -l -w shogun
-RUN sudo -u postgres -H -- psql -t -c 'CREATE DATABASE "todo-api"'
-RUN sudo -u postgres -H -- psql -c "ALTER ROLE shogun WITH PASSWORD 'password'"
+RUN echo $(docker inspect --format='{{.NetworkSettings.IPAddress}}' postgres) postgres >> /etc/hosts
+
+RUN createuser -s -i -d -r -l -w shogun
+RUN psql -t -c 'CREATE DATABASE "todo-api"'
+RUN psql -c "ALTER ROLE shogun WITH PASSWORD 'password'"
 
 RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 ENV PATH=$HOME/.rbenv/bin:$PATH
@@ -62,7 +64,7 @@ EXPOSE WEBSITE localhost:3000 /
 ## set up database
 RUN echo -e 'development:\n\
   adapter: postgresql\n\
-  host: localhost\n\
+  host: postgres\n\
   encoder: unicode\n\
   database: todo-api\n\
   username: shogun\n\
